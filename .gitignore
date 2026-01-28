@@ -11,8 +11,10 @@ venv/
 # IDE / editor files
 .vscode/
 .idea/
+.spyproject/
 
 # SQLite temporary files
+*.db
 *.db-journal
 *.db-wal
 *.db-shm
