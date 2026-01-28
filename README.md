@@ -22,6 +22,8 @@ The project theme is a *health hamlet*, managing patients, medical staff, servic
   - Insert, update, and delete data
   - Execute various SQL queries (selection, joins, aggregations)
 - Tabular display of query results using `PrettyTable`
+- Safe service deletion using a default service ("Non affecté") to preserve personnel and consultation history
+
 
 ---
 
@@ -33,7 +35,6 @@ The project theme is a *health hamlet*, managing patients, medical staff, servic
 ├── utils/
 │ └── db.py # SQLite connection and SQL script execution
 ├── data/
-│ ├── Projet.db # Pre-populated SQLite database
 │ ├── Projet.sql # Database schema (tables, constraints, views)
 │ ├── Insert_OK.sql # Valid data insertion script
 │ └── Insert_NOK.sql # Invalid data insertion script
@@ -60,11 +61,15 @@ pip install -r requirements.txt
 ---
 
 ## How to Run
-The repository includes a pre-populated SQLite database (`data/Projet.db`), so no initialization is required.
+The SQLite database is automatically created and initialized from SQL scripts on first execution.
 
 From the project root:
 ```bash
-python main.py
+python3 main.py
+```
+On Windows you may need:
+```bash
+py main.py
 ```
 
 Follow the on-screen menu to interact with the database.
@@ -73,9 +78,17 @@ Follow the on-screen menu to interact with the database.
 
 ## Notes
 - `Insert_NOK.sql` contains intentionally invalid insertions to demonstrate database constraint enforcement.
-- The database file is included to allow immediate execution without setup.
+- The database file (`data/Projet.db`) is generated automatically on first run. If you want a fresh start, delete `data/Projet.db` and run the program again.
 - Foreign key constraints are enabled in the SQLite connection.
 - The database schema follows a relational design derived from a UML conceptual model.
+- When a service is deleted, all related personnel and consultations are automatically reassigned to a default service ("Non affecté") to preserve data integrity and history.
+
+---
+
+## Reset the database
+Delete the generated database file and run again:
+- Remove `data/Projet.db`
+- Run `python3 main.py` (or `py main.py` on Windows)
 
 ---
 
